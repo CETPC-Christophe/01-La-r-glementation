@@ -232,7 +232,7 @@ function startQuiz() {
   document.getElementById('quiz').style.display = 'flex';
   document.getElementById('nextBtn').style.display = 'inline-block';
   document.getElementById('restartBtn').style.display = 'none';
-  selectedQuestions = getRandomQuestions(2);
+  selectedQuestions = getRandomQuestions(20);
   currentIndex = 0;
   userAnswers = new Array(selectedQuestions.length);
   document.getElementById('quizSubtitle').textContent = `Répondez à ${selectedQuestions.length} questions tirées au hasard sur la fin de poste`;
