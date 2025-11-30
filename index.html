@@ -141,30 +141,43 @@
 <p class="footer">© Formation Sécurité CACES – Quiz interactif</p>
 
 <script>
-const QUIZ_NAME = "La fin de poste"; // Nom du quiz pour Google Sheets
+const QUIZ_NAME = "La reglementation"; // Nom du quiz pour Google Sheets
 const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dCzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec';
 
 const allQuestions = [
-  {text:"Le nettoyage de l'engin fait partie des opérations de fin de poste.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur doit garer l'engin sur une zone en pente pour le stationner.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le stationnement de l'engin doit se faire sur un sol stable et plan.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Il n'est pas nécessaire d'abaisser les accessoires de travail avant d'arrêter l'engin.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Avant de quitter l'engin, le conducteur doit couper le contact et retirer la clé.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le plein de carburant doit être réalisé moteur allumé pour gagner du temps.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Les vérifications de fuite d'huile ou de carburant peuvent être effectuées à chaud.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Les niveaux (huile, carburant, liquide de refroidissement) doivent être vérifiés à la fin de chaque poste.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le graissage des articulations fait partie des opérations de maintenance de fin de poste.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le nettoyage du poste de conduite est facultatif.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Les anomalies constatées doivent être signalées à la hiérarchie.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le carnet de maintenance n'a pas besoin d'être mis à jour quotidiennement.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le moteur doit être arrêté avant tout entretien ou graissage.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Les flexibles hydrauliques peuvent être manipulés même sous pression.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le conducteur doit signaler tout bruit ou comportement anormal de l'engin.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Les équipements de protection individuelle peuvent être rangés à la fin du poste.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le nettoyage de l'engin permet de détecter d'éventuelles anomalies.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Les clés peuvent être laissées sur le contact si le site est sécurisé.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Les freins doivent être desserrés avant le stationnement.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le remplissage du réservoir de carburant doit se faire dans un endroit ventilé.", answers:["Vrai","Faux"], correct:"Vrai"}
+  {text:"Le conducteur d'un engin de chantier est réglementé par le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur d'un engin de chantier est réglementé par le code de la route.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le conducteur d'un engin de chantier est réglementé par la recommandation R482.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le matériel est réglementé par le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le CACES engins de chantier est réglementé par la recommandation R482.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le CACES engins de chantier est réglementé par la recommandation R489.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"La conduite sur route d'un engin n'est pas réglementée.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"La conduite sur route d'un engin est réglementée par le code de la route.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"La conduite d'engins de chantier est interdite aux personnes âgées de moins de 18 ans.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Des dérogations peuvent être obtenues pour conduire un engin de chantier avant 18 ans.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"La conduite d'engins de chantier est autorisée à partir de 16 ans.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"La conduite d'engins de chantier est autorisée à partir de 15 ans avec une dérogation.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis B est obligatoire.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis C est obligatoire.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis n'est pas obligatoire.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"La vitesse sur la route d'un engin de chantier de catégorie 2 est limitée à 20 km/h.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"La vitesse sur la route d'un engin de chantier de catégorie 2 est limitée à 25 km/h.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"La formation du conducteur d'engins de chantier est obligatoire selon le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Toute personne conduisant un engin de chantier en permanence ou occasionnellement doit être formé.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"La formation CACES R482 forme sur les connaissances et le savoir faire pour la conduite en sécurité.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le chef d'entreprise délivre l'autorisation de conduite au conducteur d'engin.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur doit conserver l'autorisation de conduite sur lui, sur les chantiers et la voie publique.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"L'autorisation de conduite permet uniquement de conduire le type d'engin utilisé pendant la formation.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Pour délivrer une autorisation de conduite, le chef d'entreprise doit s'assurer de l'aptitude médicale du conducteur.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Pour délivrer une autorisation de conduite, le chef d'entreprise doit s'assurer que le conducteur a suivi une évaluation théorique et pratique en conduite en sécurité.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"L'aptitude médicale est attestée par le médecin du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur d'engins n'a pas l'obligation de présenter son autorisation de conduite lors d'un contrôle de l'inspecteur du travail.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le conducteur de l'engin de chantier est responsable du matériel.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur de l'engin de chantier est responsable du chargement qu'il manipule.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur de l'engin de chantier est responsable de la sécurité dans sa zone de travail.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Une agence d'intérim a l'obligation de former le conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Une agence d'intérim a l'obligation de faire réaliser une visite médicale au conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Une agence d'intérim a l'obligation de faire évaluer les connaissances et savoir-faire du conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"}
 ];
 
 let selectedQuestions = [];
