@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QCM CACES – 01-La réglementation</title>
+<title>QCM CACES – La fin de poste</title>
 <style>
   :root {
     --orange: #ff6600;
@@ -114,9 +114,9 @@
 </head>
 <body>
 
-<div class="banner">🚧 Formation CACES – 01. La réglementation 🚜</div>
-<h1>QCM – 01-La réglementation</h1>
-<p class="subtitle" id="quizSubtitle">Répondez aux questions tirées au hasard sur la réglementation</p>
+<div class="banner">🚧 Formation CACES – La fin de poste 🚜</div>
+<h1>QCM – La fin de poste</h1>
+<p class="subtitle" id="quizSubtitle">Répondez aux questions tirées au hasard sur la fin de poste</p>
 
 <div id="intro">
   <div class="question">
@@ -141,55 +141,38 @@
 <p class="footer">© Formation Sécurité CACES – Quiz interactif</p>
 
 <script>
+const QUIZ_NAME = "La fin de poste"; // Nom du quiz pour Google Sheets
+const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dCzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec';
+
 const allQuestions = [
-  {text:"Le conducteur d'un engin de chantier est réglementé par le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur d'un engin de chantier est réglementé par le code de la route.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le conducteur d'un engin de chantier est réglementé par la recommandation R482.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le matériel est réglementé par le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le CACES engins de chantier est réglementé par la recommandation R482.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le CACES engins de chantier est réglementé par la recommandation R489.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"La conduite sur route d'un engin n'est pas réglementée.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"La conduite sur route d'un engin est réglementée par le code de la route.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"La conduite d'engins de chantier est interdite aux personnes âgées de moins de 18 ans.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Des dérogations peuvent être obtenues pour conduire un engin de chantier avant 18 ans.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"La conduite d'engins de chantier est autorisée à partir de 16 ans.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"La conduite d'engins de chantier est autorisée à partir de 15 ans avec une dérogation.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis B est obligatoire.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis C est obligatoire.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Pour conduire un engin de chantier de catégorie 2 sur la route, le permis n'est pas obligatoire.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"La vitesse sur la route d'un engin de chantier de catégorie 2 est limitée à 20 km/h.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"La vitesse sur la route d'un engin de chantier de catégorie 2 est limitée à 25 km/h.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"La formation du conducteur d'engins de chantier est obligatoire selon le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Toute personne conduisant un engin de chantier en permanence ou occasionnellement doit être formé.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"La formation CACES R482 forme sur les connaissances et le savoir faire pour la conduite en sécurité.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le chef d'entreprise délivre l'autorisation de conduite au conducteur d'engin.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur doit conserver l'autorisation de conduite sur lui, sur les chantiers et la voie publique.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"L'autorisation de conduite permet uniquement de conduire le type d'engin utilisé pendant la formation.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Pour délivrer une autorisation de conduite, le chef d'entreprise doit s'assurer de l'aptitude médicale du conducteur.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Pour délivrer une autorisation de conduite, le chef d'entreprise doit s'assurer que le conducteur a suivi une évaluation théorique et pratique en conduite en sécurité.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"L'aptitude médicale est attestée par le médecin du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur d'engins n'a pas l'obligation de présenter son autorisation de conduite lors d'un contrôle de l'inspecteur du travail.", answers:["Vrai","Faux"], correct:"Faux"},
-  {text:"Le conducteur de l'engin de chantier est responsable du matériel.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur de l'engin de chantier est responsable du chargement qu'il manipule.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Le conducteur de l'engin de chantier est responsable de la sécurité dans sa zone de travail.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Une agence d'intérim a l'obligation de former le conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Une agence d'intérim a l'obligation de faire réaliser une visite médicale au conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"},
-  {text:"Une agence d'intérim a l'obligation de faire évaluer les connaissances et savoir-faire du conducteur mis à disposition d'une entreprise.", answers:["Vrai","Faux"], correct:"Vrai"}
+  {text:"Le nettoyage de l'engin fait partie des opérations de fin de poste.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le conducteur doit garer l'engin sur une zone en pente pour le stationner.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le stationnement de l'engin doit se faire sur un sol stable et plan.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Il n'est pas nécessaire d'abaisser les accessoires de travail avant d'arrêter l'engin.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Avant de quitter l'engin, le conducteur doit couper le contact et retirer la clé.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le plein de carburant doit être réalisé moteur allumé pour gagner du temps.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Les vérifications de fuite d'huile ou de carburant peuvent être effectuées à chaud.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Les niveaux (huile, carburant, liquide de refroidissement) doivent être vérifiés à la fin de chaque poste.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le graissage des articulations fait partie des opérations de maintenance de fin de poste.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le nettoyage du poste de conduite est facultatif.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Les anomalies constatées doivent être signalées à la hiérarchie.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le carnet de maintenance n'a pas besoin d'être mis à jour quotidiennement.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le moteur doit être arrêté avant tout entretien ou graissage.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Les flexibles hydrauliques peuvent être manipulés même sous pression.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le conducteur doit signaler tout bruit ou comportement anormal de l'engin.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Les équipements de protection individuelle peuvent être rangés à la fin du poste.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Le nettoyage de l'engin permet de détecter d'éventuelles anomalies.", answers:["Vrai","Faux"], correct:"Vrai"},
+  {text:"Les clés peuvent être laissées sur le contact si le site est sécurisé.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Les freins doivent être desserrés avant le stationnement.", answers:["Vrai","Faux"], correct:"Faux"},
+  {text:"Le remplissage du réservoir de carburant doit se faire dans un endroit ventilé.", answers:["Vrai","Faux"], correct:"Vrai"}
 ];
-
-const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dCzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec'; // À configurer si besoin
-
-function getRandomQuestions(num) {
-  let available = [...allQuestions];
-  available.sort(() => Math.random() - 0.5);
-  return available.slice(0, num);
-}
 
 let selectedQuestions = [];
 let currentIndex = 0;
 let userAnswers = [];
 let candidateName = '';
 
+// 🔹 Formater l'heure en JJ/MM/AAAA HH:MM:SS
 function formatDateTime(isoString) {
   const date = new Date(isoString);
   const day = String(date.getDate()).padStart(2, '0');
@@ -201,6 +184,19 @@ function formatDateTime(isoString) {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
+// 🔹 Tirage aléatoire des questions
+function getRandomQuestions(num) {
+  let used = JSON.parse(localStorage.getItem("usedQuestions") || "[]");
+  let available = allQuestions.filter(q => !used.includes(q.text));
+  if (available.length < num) { used = []; available = [...allQuestions]; }
+  available.sort(() => Math.random() - 0.5);
+  const selected = available.slice(0, num);
+  selected.forEach(q => used.push(q.text));
+  localStorage.setItem("usedQuestions", JSON.stringify(used));
+  return selected;
+}
+
+// 🔹 Affichage de l'écran d'accueil
 function showIntro() {
   document.getElementById('intro').style.display = 'flex';
   document.getElementById('quiz').style.display = 'none';
@@ -212,77 +208,104 @@ function showIntro() {
   const startBtn = document.getElementById('startBtn');
   nameInput.value = '';
   startBtn.disabled = true;
-  nameInput.addEventListener('input', () => {
-    startBtn.disabled = nameInput.value.trim() === '';
-  });
+  nameInput.addEventListener('input', () => { startBtn.disabled = nameInput.value.trim() === ''; });
 }
 
+// 🔹 Démarrage du quiz
 function startQuiz() {
-  const nameInput = document.getElementById('candidateName');
-  candidateName = nameInput.value.trim();
+  candidateName = document.getElementById('candidateName').value.trim();
   if (!candidateName) return;
   document.getElementById('intro').style.display = 'none';
   document.getElementById('quiz').style.display = 'flex';
   document.getElementById('nextBtn').style.display = 'inline-block';
   document.getElementById('restartBtn').style.display = 'none';
-
-  selectedQuestions = getRandomQuestions(20);
+  selectedQuestions = getRandomQuestions(2);
   currentIndex = 0;
   userAnswers = new Array(selectedQuestions.length);
-
-  document.getElementById('quizSubtitle').textContent =
-    `Répondez à ${selectedQuestions.length} questions tirées au hasard sur la réglementation`;
-
+  document.getElementById('quizSubtitle').textContent = `Répondez à ${selectedQuestions.length} questions tirées au hasard sur la fin de poste`;
   renderQuestion();
+  try { history.pushState(null, null, location.href); window.addEventListener('popstate', () => history.pushState(null, null, location.href)); } catch (e) {}
 }
 
+// 🔹 Affichage d'une question
 function renderQuestion() {
-  const quizContainer = document.getElementById("quiz");
   const q = selectedQuestions[currentIndex];
-  const options = q.answers.map(a => 
-    `<label><input type="radio" name="q" value="${a}"> ${a}</label>`
-  ).join("");
-  quizContainer.innerHTML = `
-    <div class="question">
-      <p>⚙️ <b>Question ${currentIndex+1} :</b> ${q.text}</p>
-      <div class="answers">${options}</div>
-    </div>`;
-
+  const options = q.answers.map(a => `<label><input type="radio" name="q" value="${a}"> ${a}</label>`).join("");
+  document.getElementById("quiz").innerHTML = `<div class="question"><p>⚙️ <b>Question ${currentIndex+1} :</b> ${q.text}</p><div class="answers">${options}</div></div>`;
   const nextBtn = document.getElementById("nextBtn");
   nextBtn.disabled = true;
   nextBtn.textContent = (currentIndex === selectedQuestions.length - 1) ? "🏁 Terminer" : "➡️ Suivant";
-  const radios = quizContainer.querySelectorAll('input[name="q"]');
-  radios.forEach(r => r.addEventListener('change', () => { nextBtn.disabled = false; }));
+  document.querySelectorAll('input[name="q"]').forEach(r => r.addEventListener('change', () => { nextBtn.disabled = false; }));
 }
 
+// 🔹 Passage à la question suivante
 function nextQuestion() {
   const selected = document.querySelector('input[name="q"]:checked');
   if (!selected) return;
   userAnswers[currentIndex] = selected.value;
-  if (currentIndex < selectedQuestions.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  } else {
-    showResults();
-  }
+  if (currentIndex < selectedQuestions.length - 1) { currentIndex++; renderQuestion(); } 
+  else { showResults(); }
 }
 
-function showResults() {
+// 🔹 Construction de l'objet à envoyer
+function buildResultObject() {
+  const now = new Date();
   let score = 0;
-  selectedQuestions.forEach((q,i) => { if(userAnswers[i]===q.correct) score++; });
-  const timestamp = formatDateTime(new Date().toISOString());
-  document.getElementById("quiz").innerHTML = `
-    <div class="question">
+  const details = selectedQuestions.map((q, i) => {
+    const given = userAnswers[i] || '';
+    if (given === q.correct) score++;
+    return { question: q.text, given: given, correct: q.correct };
+  });
+  return {
+    timestamp: now.toISOString(),
+    candidate: candidateName,
+    score: score,
+    total: selectedQuestions.length,
+    details: details,
+    quiz: "La fin de poste" // Nom du quiz pour Google Sheets
+  };
+}
+
+// 🔹 Envoi des résultats
+function sendResults() {
+  const payload = buildResultObject();
+  const statusEl = document.getElementById('saveStatus');
+  if (!RESULTS_ENDPOINT) { statusEl.textContent = 'Aucun endpoint configuré.'; return Promise.reject(new Error('Aucun endpoint configuré')); }
+  statusEl.textContent = 'Envoi en cours...';
+  return fetch(RESULTS_ENDPOINT, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => { statusEl.textContent = 'Envoi réussi ✔️'; })
+    .catch(err => { statusEl.textContent = 'Erreur envoi: ' + err.message; return Promise.reject(err); });
+}
+
+// 🔹 Affichage des résultats
+function showResults() {
+  document.getElementById("quiz").innerHTML = `<div class="question"><p>⚙️ Vérification de vos réponses...</p></div>`;
+  document.getElementById("nextBtn").style.display = 'none';
+  document.getElementById('restartBtn').style.display = 'none';
+  sendResults().then(() => {
+    let score = 0;
+    selectedQuestions.forEach((q, i) => { if (userAnswers[i] === q.correct) score++; });
+    const timestamp = formatDateTime(new Date().toISOString());
+    document.getElementById("quiz").innerHTML = `<div class="question">
       <p>🏷️ Candidat : <b>${candidateName}</b></p>
       <p>🏁 Résultat : <span style="color:var(--orange);">${score}</span> / ${selectedQuestions.length}</p>
       <p>⏱️ Réalisé le : <b>${timestamp}</b></p>
     </div>`;
-  document.getElementById('nextBtn').style.display = 'none';
-  document.getElementById('restartBtn').style.display = 'inline-block';
+    document.getElementById('restartBtn').style.display = 'inline-block';
+  }).catch(err => {
+    document.getElementById("quiz").innerHTML = `<div class="question"><p>❌ Erreur lors de l'envoi des résultats. Veuillez réessayer.</p></div>`;
+    document.getElementById('restartBtn').style.display = 'inline-block';
+  });
 }
 
+// 🔹 Recommencer le quiz
 function restartQuiz() { showIntro(); }
 
+// 🔹 Initialisation
 showIntro();
 </script>
 </body>
