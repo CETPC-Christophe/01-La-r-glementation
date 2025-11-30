@@ -114,9 +114,9 @@
 </head>
 <body>
 
-<div class="banner">🚧 Formation CACES® R482A 🚜</div>
+<div class="banner" id="quizBanner"></div>
 <h1>ÉVALUATION</h1>
-<p class="subtitle" id="quizSubtitle">Répondez aux questions tirées au hasard sur la fin de poste</p>
+<p class="subtitle" id="quizSubtitle">Répondez aux questions tirées au hasard</p>
 
 <div id="intro">
   <div class="question">
@@ -138,10 +138,13 @@
 </div>
 
 <p id="result" class="result"></p>
-<p class="footer">© Formation Sécurité CACES® – Quiz interactif</p>
+<p class="footer">© Formation Sécurité CACES® R482A – Quiz interactif</p>
 
 <script>
 const QUIZ_NAME = "La reglementation"; // Nom du quiz pour Google Sheets
+  document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("quizBanner").textContent = `🚧 ${QUIZ_NAME} 🚜`;
+});
 const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dCzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec';
 
 const allQuestions = [
