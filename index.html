@@ -138,7 +138,7 @@
 </div>
 
 <p id="result" class="result"></p>
-<p class="footer">© Formation Sécurité CACES – Quiz interactif</p>
+<p class="footer">© Formation Sécurité CACES® – Quiz interactif</p>
 
 <script>
 const QUIZ_NAME = "La reglementation"; // Nom du quiz pour Google Sheets
@@ -235,7 +235,7 @@ function startQuiz() {
   selectedQuestions = getRandomQuestions(20);
   currentIndex = 0;
   userAnswers = new Array(selectedQuestions.length);
-  document.getElementById('quizSubtitle').textContent = `Répondez à ${selectedQuestions.length} questions tirées au hasard sur la fin de poste`;
+  document.getElementById('quizSubtitle').textContent = `Répondez à ${selectedQuestions.length} questions tirées au hasard`;
   renderQuestion();
   try { history.pushState(null, null, location.href); window.addEventListener('popstate', () => history.pushState(null, null, location.href)); } catch (e) {}
 }
