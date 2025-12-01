@@ -132,7 +132,6 @@
 <div id="quiz"></div>
 
 <div style="text-align:center;">
-  <button id="nextBtn" onclick="nextQuestion()" disabled style="display:none;">➡️ Suivant</button>
   <button id="restartBtn" onclick="restartQuiz()" style="display:none;">🔄 Nouvelle évaluation</button>
   <div id="saveStatus" style="margin-top:8px; color:#444; font-size:0.9rem;"></div>
 </div>
@@ -141,11 +140,12 @@
 <p class="footer">© Formation Sécurité CACES® R482A – Quiz interactif</p>
 
 <script>
-const QUIZ_NAME = "La réglementation"; // Nom du quiz pour Google Sheets
-  document.addEventListener("DOMContentLoaded", () => {
+const QUIZ_NAME = "La réglementation";
+document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quizBanner").textContent = `🚧 ${QUIZ_NAME} 🚜`;
 });
-const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dCzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec';
+
+const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzSnnlxH2dDzkVqobrQX-E4n4lo-WcxoDvmLHr7cLn35d4xploO_K3p9tNuY0OweRsW/exec';
 
 const allQuestions = [
   {text:"Le conducteur d'un engin de chantier est réglementé par le code du travail.", answers:["Vrai","Faux"], correct:"Vrai"},
@@ -188,7 +188,7 @@ let currentIndex = 0;
 let userAnswers = [];
 let candidateName = '';
 
-// 🔹 Formater l'heure en JJ/MM/AAAA HH:MM:SS
+// Utilitaire format date
 function formatDateTime(isoString) {
   const date = new Date(isoString);
   const day = String(date.getDate()).padStart(2, '0');
@@ -200,7 +200,7 @@ function formatDateTime(isoString) {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
-// 🔹 Tirage aléatoire des questions
+// Tirage aléatoire
 function getRandomQuestions(num) {
   let used = JSON.parse(localStorage.getItem("usedQuestions") || "[]");
   let available = allQuestions.filter(q => !used.includes(q.text));
@@ -212,11 +212,10 @@ function getRandomQuestions(num) {
   return selected;
 }
 
-// 🔹 Affichage de l'écran d'accueil
+// Affichage écran d'accueil
 function showIntro() {
   document.getElementById('intro').style.display = 'flex';
   document.getElementById('quiz').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
   document.getElementById('restartBtn').style.display = 'none';
   document.getElementById('result').innerHTML = '';
   document.getElementById('saveStatus').innerHTML = '';
@@ -227,101 +226,135 @@ function showIntro() {
   nameInput.addEventListener('input', () => { startBtn.disabled = nameInput.value.trim() === ''; });
 }
 
-// 🔹 Démarrage du quiz
+// Démarrage quiz
 function startQuiz() {
   candidateName = document.getElementById('candidateName').value.trim();
   if (!candidateName) return;
+
   document.getElementById('intro').style.display = 'none';
   document.getElementById('quiz').style.display = 'flex';
-  document.getElementById('nextBtn').style.display = 'inline-block';
   document.getElementById('restartBtn').style.display = 'none';
+
   selectedQuestions = getRandomQuestions(20);
   currentIndex = 0;
   userAnswers = new Array(selectedQuestions.length);
-  document.getElementById('quizSubtitle').textContent = `Répondez à ${selectedQuestions.length} questions tirées au hasard`;
+
+  document.getElementById('quizSubtitle').textContent =
+    `Répondez à ${selectedQuestions.length} questions tirées au hasard`;
+
   renderQuestion();
-  try { history.pushState(null, null, location.href); window.addEventListener('popstate', () => history.pushState(null, null, location.href)); } catch (e) {}
 }
 
-// 🔹 Affichage d'une question
+// Affichage d'une question (MODIFIÉ : bouton intégré dans le bloc)
 function renderQuestion() {
   const q = selectedQuestions[currentIndex];
-  const options = q.answers.map(a => `<label><input type="radio" name="q" value="${a}"> ${a}</label>`).join("");
-  document.getElementById("quiz").innerHTML = `<div class="question"><p>⚙️ <b>Question ${currentIndex+1} :</b> ${q.text}</p><div class="answers">${options}</div></div>`;
-  const nextBtn = document.getElementById("nextBtn");
-  nextBtn.disabled = true;
-  nextBtn.textContent = (currentIndex === selectedQuestions.length - 1) ? "🏁 Terminer" : "➡️ Suivant";
-  document.querySelectorAll('input[name="q"]').forEach(r => r.addEventListener('change', () => { nextBtn.disabled = false; }));
+  const options = q.answers
+    .map(a => `<label><input type="radio" name="q" value="${a}"> ${a}</label>`)
+    .join("");
+
+  document.getElementById("quiz").innerHTML = `
+    <div class="question">
+      <p>⚙️ <b>Question ${currentIndex+1} :</b> ${q.text}</p>
+      <div class="answers">${options}</div>
+      <div style="margin-top:15px; text-align:center;">
+        <button id="nextBtnInternal" disabled>
+          ${(currentIndex === selectedQuestions.length - 1) ? "🏁 Terminer" : "➡️ Suivant"}
+        </button>
+      </div>
+    </div>`;
+
+  const nextBtn = document.getElementById("nextBtnInternal");
+  nextBtn.addEventListener("click", nextQuestion);
+
+  document.querySelectorAll('input[name="q"]').forEach(r =>
+    r.addEventListener('change', () => { nextBtn.disabled = false; })
+  );
 }
 
-// 🔹 Passage à la question suivante
+// Passer à la question suivante
 function nextQuestion() {
   const selected = document.querySelector('input[name="q"]:checked');
   if (!selected) return;
   userAnswers[currentIndex] = selected.value;
-  if (currentIndex < selectedQuestions.length - 1) { currentIndex++; renderQuestion(); } 
-  else { showResults(); }
+
+  if (currentIndex < selectedQuestions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
 }
 
-// 🔹 Construction de l'objet à envoyer
+// Construction objet résultats
 function buildResultObject() {
   const now = new Date();
   let score = 0;
+
   const details = selectedQuestions.map((q, i) => {
     const given = userAnswers[i] || '';
     if (given === q.correct) score++;
     return { question: q.text, given: given, correct: q.correct };
   });
+
   return {
     timestamp: now.toISOString(),
     candidate: candidateName,
     score: score,
     total: selectedQuestions.length,
     details: details,
-    quiz: "La reglementation" // Nom du quiz pour Google Sheets
+    quiz: "La reglementation"
   };
 }
 
-// 🔹 Envoi des résultats
+// Envoi des résultats
 function sendResults() {
   const payload = buildResultObject();
   const statusEl = document.getElementById('saveStatus');
-  if (!RESULTS_ENDPOINT) { statusEl.textContent = 'Aucun endpoint configuré.'; return Promise.reject(new Error('Aucun endpoint configuré')); }
+
   statusEl.textContent = 'Envoi en cours...';
+
   return fetch(RESULTS_ENDPOINT, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).then(() => { statusEl.textContent = 'Envoi réussi ✔️'; })
-    .catch(err => { statusEl.textContent = 'Erreur envoi: ' + err.message; return Promise.reject(err); });
+  })
+  .then(() => { statusEl.textContent = 'Envoi réussi ✔️'; })
+  .catch(err => {
+    statusEl.textContent = 'Erreur envoi: ' + err.message;
+    return Promise.reject(err);
+  });
 }
 
-// 🔹 Affichage des résultats
+// Affichage résultats
 function showResults() {
-  document.getElementById("quiz").innerHTML = `<div class="question"><p>⚙️ Vérification de vos réponses...</p></div>`;
-  document.getElementById("nextBtn").style.display = 'none';
-  document.getElementById('restartBtn').style.display = 'none';
+  document.getElementById("quiz").innerHTML =
+    `<div class="question"><p>⚙️ Vérification de vos réponses...</p></div>`;
+
   sendResults().then(() => {
-    let score = 0;
-    selectedQuestions.forEach((q, i) => { if (userAnswers[i] === q.correct) score++; });
+    let score = userAnswers.filter((ans, i) => ans === selectedQuestions[i].correct).length;
     const timestamp = formatDateTime(new Date().toISOString());
-    document.getElementById("quiz").innerHTML = `<div class="question">
-      <p>🏷️ Candidat : <b>${candidateName}</b></p>
-      <p>🏁 Résultat : <span style="color:var(--orange);">${score}</span> / ${selectedQuestions.length}</p>
-      <p>⏱️ Réalisé le : <b>${timestamp}</b></p>
-    </div>`;
+
+    document.getElementById("quiz").innerHTML = `
+      <div class="question">
+        <p>🏷️ Candidat : <b>${candidateName}</b></p>
+        <p>🏁 Résultat : <span style="color:var(--orange);">${score}</span> / ${selectedQuestions.length}</p>
+        <p>⏱️ Réalisé le : <b>${timestamp}</b></p>
+      </div>`;
+
     document.getElementById('restartBtn').style.display = 'inline-block';
-  }).catch(err => {
-    document.getElementById("quiz").innerHTML = `<div class="question"><p>❌ Erreur lors de l'envoi des résultats. Veuillez réessayer.</p></div>`;
+  })
+  .catch(() => {
+    document.getElementById("quiz").innerHTML =
+      `<div class="question"><p>❌ Erreur lors de l'envoi des résultats. Veuillez réessayer.</p></div>`;
     document.getElementById('restartBtn').style.display = 'inline-block';
   });
 }
 
-// 🔹 Recommencer le quiz
+// Recommencer
 function restartQuiz() { showIntro(); }
 
-// 🔹 Initialisation
+// Initialisation
 showIntro();
 </script>
 </body>
